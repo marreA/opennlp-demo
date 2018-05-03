@@ -1,6 +1,6 @@
 Code to accompany Phil's June 2015 Tri-JUG presentation
 on OpenNLP.
-
+[![Build Status](https://travis-ci.org/marreA/opennlp-demo.svg?branch=master)](https://travis-ci.org/marreA/opennlp-demo)
 # Notes:
 
 TBD...
