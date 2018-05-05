@@ -2,7 +2,10 @@
 package org.fogbeam.example.opennlp;
 
 
+import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -10,54 +13,40 @@ import opennlp.tools.tokenize.Tokenizer;
 import opennlp.tools.tokenize.TokenizerME;
 import opennlp.tools.tokenize.TokenizerModel;
 
-
-public class TokenizerMain
-{
-	public static void main( String[] args ) throws Exception
-	{
-		
-		// the provided model
-		// InputStream modelIn = new FileInputStream( "models/en-token.bin" );
-
-		
-		// the model we trained
-		InputStream modelIn = new FileInputStream( "models/en-token.model" );
-		
-		try
-		{
-			TokenizerModel model = new TokenizerModel( modelIn );
-		
+/**
+ * Clase TokenizerMain
+ * A partir de un fichero permite obtener los tokens que se encuentran en él.
+ * @author marre
+ *
+ */
+public class TokenizerMain {
+	private final static String PATH = "PATH";
+	private final static String PATH_TO_MODEL = "models/en-token.model";
+	
+	/**
+	 * Obtiene los tokens del fichero en inglés del parámetro file
+	 * @param file
+	 */
+	public static void tokenize(String file) {
+		try (InputStream modelInput = new FileInputStream(PATH_TO_MODEL)) {
+			TokenizerModel model = new TokenizerModel(modelInput);
 			Tokenizer tokenizer = new TokenizerME(model);
-			
-				/* note what happens with the "three depending on which model you use */
-			String[] tokens = tokenizer.tokenize
-					(  "A ranger journeying with Oglethorpe, founder of the Georgia Colony, " 
-							+ " mentions \"three Mounts raised by the Indians over three of their Great Kings" 
-							+ " who were killed in the Wars.\"" );
-			
-			for( String token : tokens )
-			{
-				System.out.println( token );
+			try(BufferedReader buffer = new BufferedReader(new FileReader(file))) {
+				String line = "";
+				while((line = buffer.readLine()) != null) {
+					String[] tokens = tokenizer.tokenize(line);
+					for(String token : tokens)
+						System.out.println("Token: " + token);
+				}
 			}
-			
-		}
-		catch( IOException e )
-		{
+		} catch (FileNotFoundException e) {
 			e.printStackTrace();
+		} catch (IOException e1) {
+			e1.printStackTrace();
 		}
-		finally
-		{
-			if( modelIn != null )
-			{
-				try
-				{
-					modelIn.close();
-				}
-				catch( IOException e )
-				{
-				}
-			}
-		}
-		System.out.println( "\n-----\ndone" );
+	}
+	
+	public static void main( String[] args ) throws Exception {
+		tokenize(TokenizerMain.PATH);
 	}
 }
