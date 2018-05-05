@@ -1,4 +1,8 @@
-
+/**
+ * @author Alejandro Marrero
+ * @date 5-5-18
+ * @subject Calidad
+ */
 package org.fogbeam.example.opennlp;
 
 
@@ -23,7 +27,7 @@ public class TokenizerMain {
 	private final static String PATH = "inputs/file1.txt";
 	private final static String PATH_TO_MODEL = "models/en-token.model";
 	
-	/**
+	/**@author Alejandro Marrero
 	 * Obtiene los tokens del fichero en inglés del parámetro file
 	 * @param file
 	 */
