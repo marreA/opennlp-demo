@@ -3,3 +3,5 @@ jdk:
  - oraclejdk8
 sudo: false
 script: mvn package
+after_success:
+  - javadoc -public -sourcepath "src/main/java:src/main/" -d -sourcepath "doc-practica/" nlp-demo1
