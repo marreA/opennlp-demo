@@ -20,7 +20,7 @@ import opennlp.tools.tokenize.TokenizerModel;
  *
  */
 public class TokenizerMain {
-	private final static String PATH = "PATH";
+	private final static String PATH = "inputs/file1.txt";
 	private final static String PATH_TO_MODEL = "models/en-token.model";
 	
 	/**
@@ -28,16 +28,16 @@ public class TokenizerMain {
 	 * @param file
 	 */
 	public static void tokenize(String file) {
-		try (InputStream modelInput = new FileInputStream(PATH_TO_MODEL)) {
+		try{
+			InputStream modelInput = new FileInputStream(PATH_TO_MODEL);
 			TokenizerModel model = new TokenizerModel(modelInput);
 			Tokenizer tokenizer = new TokenizerME(model);
-			try(BufferedReader buffer = new BufferedReader(new FileReader(file))) {
-				String line = "";
-				while((line = buffer.readLine()) != null) {
-					String[] tokens = tokenizer.tokenize(line);
-					for(String token : tokens)
-						System.out.println("Token: " + token);
-				}
+			BufferedReader buffer = new BufferedReader(new FileReader(file));
+			String line = "";
+			while((line = buffer.readLine()) != null) {
+				String[] tokens = tokenizer.tokenize(line);
+				for(String token : tokens)
+					System.out.println("Token: " + token);
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
